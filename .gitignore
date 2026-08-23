@@ -1,0 +1,9 @@
+.agents/
+.claude/
+node_modules/
+dist/
+.vercel/
+*.local
+.env
+.env.*
+!.env.example
