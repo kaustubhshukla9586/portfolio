@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { MotionConfig } from "framer-motion";
 import Preloader from "./components/Preloader.jsx";
-import CursorLayer from "./components/CursorLayer.jsx";
+import Cursor from "./components/Cursor.jsx";
 import Nav from "./components/Nav.jsx";
 import Hero from "./sections/Hero.jsx";
 import About from "./sections/About.jsx";
@@ -12,8 +12,8 @@ import { Work, Projects, Contact } from "./sections/Sections.jsx";
 // Heavy above-the-fold-ish assets we decode DURING the preloader so the
 // grayscale→color portrait swap (About) never janks after the loader lifts.
 const PRELOAD_IMAGES = [
-  "/assets/portrait-bw.webp",
-  "/assets/portrait-color.webp",
+  "/assets/portrait-bw.jpg",
+  "/assets/portrait-color.jpg",
 ];
 
 function preloadImage(src) {
@@ -58,10 +58,10 @@ export default function App() {
 
   return (
     // reducedMotion="user" makes every framer-motion animation honor the OS
-    // setting globally — wired once here.
+    // setting globally - wired once here.
     <MotionConfig reducedMotion="user">
       <Preloader done={loaded} />
-      <CursorLayer />
+      <Cursor />
       <div className="grain-overlay" aria-hidden="true" />
 
       <Nav />
