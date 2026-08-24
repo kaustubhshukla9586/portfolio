@@ -1,30 +1,57 @@
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 /*
  * Preloader — SWAPPABLE.
- * The `<PreloaderVisual/>` below is the only thing to replace when a custom
- * loader element is ready: swap its inner JSX, keep the same props, and the
- * fade-out wiring in App.jsx stays untouched. Nothing else references the
- * visual internals.
+ * Covers the real ~2.6s asset-loading buffer (fonts + portraits) driven from
+ * App.jsx. A determinate 0→100 counter + fill bar reads as genuine loading
+ * rather than a decorative spinner. Swap `<PreloaderVisual/>` internals if a
+ * custom loader is ever ready; the fade-out wiring in App.jsx stays untouched.
  */
 
-function PreloaderVisual() {
-  // Clean placeholder: monogram + a thin indeterminate bar.
+function PreloaderVisual({ done }) {
+  const reduce = useReducedMotion();
+  const [pct, setPct] = useState(reduce ? 100 : 0);
+
+  // Ease a percentage toward 100 while loading; snap to 100 the moment the
+  // real load finishes so the number never lies about being "done".
+  useEffect(() => {
+    if (reduce) return;
+    if (done) {
+      setPct(100);
+      return;
+    }
+    const start = performance.now();
+    const DUR = 2400;
+    let raf;
+    const tick = (now) => {
+      const t = Math.min((now - start) / DUR, 1);
+      // easeOutCubic, capped at 96% until the real "done" arrives.
+      const eased = 1 - Math.pow(1 - t, 3);
+      setPct(Math.min(96, Math.round(eased * 100)));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [done, reduce]);
+
   return (
-    <div className="flex flex-col items-center gap-6">
+    <div className="flex w-56 flex-col items-center gap-6">
       <span className="font-display text-6xl font-bold tracking-tight text-bone">
         K<span className="text-amber">S</span>
       </span>
-      <div className="h-px w-40 overflow-hidden bg-white/10">
-        <motion.div
-          className="h-full w-1/3 bg-amber"
-          animate={{ x: ["-120%", "360%"] }}
-          transition={{ duration: 1.1, repeat: Infinity, ease: "easeInOut" }}
+      <div className="h-px w-full overflow-hidden bg-white/10">
+        <div
+          className="h-full bg-amber transition-[width] duration-200 ease-out"
+          style={{ width: `${pct}%` }}
         />
       </div>
-      <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-bone-dim">
-        loading
-      </span>
+      <div className="flex w-full items-center justify-between font-mono text-[11px] uppercase tracking-[0.3em] text-bone-dim">
+        <span>loading</span>
+        <span className="tabular-nums text-bone/70">
+          {String(pct).padStart(3, "0")}
+        </span>
+      </div>
     </div>
   );
 }
@@ -39,7 +66,7 @@ export default function Preloader({ done }) {
       style={{ pointerEvents: done ? "none" : "auto" }}
       aria-hidden={done}
     >
-      <PreloaderVisual />
+      <PreloaderVisual done={done} />
     </motion.div>
   );
 }
