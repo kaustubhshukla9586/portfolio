@@ -4,24 +4,56 @@ import Preloader from "./components/Preloader.jsx";
 import CursorLayer from "./components/CursorLayer.jsx";
 import Nav from "./components/Nav.jsx";
 import Hero from "./sections/Hero.jsx";
-import { About, Work, Projects, Contact } from "./sections/Sections.jsx";
+import About from "./sections/About.jsx";
+import ScrollStatement from "./sections/ScrollStatement.jsx";
+import Footer from "./sections/Footer.jsx";
+import { Work, Projects, Contact } from "./sections/Sections.jsx";
+
+// Heavy above-the-fold-ish assets we decode DURING the preloader so the
+// grayscale→color portrait swap (About) never janks after the loader lifts.
+const PRELOAD_IMAGES = [
+  "/assets/portrait-bw.webp",
+  "/assets/portrait-color.webp",
+];
+
+function preloadImage(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = img.onerror = () => resolve();
+    img.src = src;
+    // decode() gives us a fully-rasterised image before we resolve.
+    if (img.decode) img.decode().then(resolve).catch(() => resolve());
+  });
+}
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
 
-  // Hold the preloader until fonts are ready (prevents FOUT on the display type),
-  // with a hard ceiling so a slow font never traps the page.
+  // The preloader is a REAL asset-loading buffer, not just cosmetic. We hold it
+  // until (a) fonts are ready, (b) the portraits are decoded, AND (c) a minimum
+  // ~2.6s has elapsed so the loader is comfortably visible and nothing that
+  // depends on those assets lags in after it disappears.
   useEffect(() => {
-    let done = false;
-    const finish = () => {
-      if (done) return;
-      done = true;
-      setLoaded(true);
-    };
+    let cancelled = false;
+    const MIN_VISIBLE = 2600;
+
     const fonts = document.fonts?.ready ?? Promise.resolve();
-    fonts.then(finish);
-    const ceiling = setTimeout(finish, 2000);
-    return () => clearTimeout(ceiling);
+    const images = Promise.all(PRELOAD_IMAGES.map(preloadImage));
+    const minTime = new Promise((r) => setTimeout(r, MIN_VISIBLE));
+
+    // Hard ceiling: a stalled font/image never traps the page past ~5s.
+    const ceiling = new Promise((r) => setTimeout(r, 5000));
+
+    Promise.race([
+      Promise.all([fonts, images, minTime]),
+      ceiling,
+    ]).then(() => {
+      if (!cancelled) setLoaded(true);
+    });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return (
@@ -37,10 +69,12 @@ export default function App() {
         <Hero />
         <div className="hazard-seam" aria-hidden="true" />
         <About />
+        <ScrollStatement />
         <Work />
         <Projects />
         <Contact />
       </main>
+      <Footer />
     </MotionConfig>
   );
 }
