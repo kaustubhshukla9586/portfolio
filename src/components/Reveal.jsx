@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 /*
- * Reveal — the general scroll-reveal used for cards / list items.
+ * Reveal - the general scroll-reveal used for cards / list items.
  * Derek-Cole snappy spring: opacity 0→1, y:20→0,
  * spring { stiffness: 130, damping: 30, mass: 0.1 }.
  * Collapses to instant/static under prefers-reduced-motion.
