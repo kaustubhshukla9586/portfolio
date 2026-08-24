@@ -1,10 +1,9 @@
-import Reveal from "../components/Reveal.jsx";
 import WordReveal from "../components/WordReveal.jsx";
 
 /*
- * Phase 1 skeletons only. Each section is an anchor target for the nav.
- * Real content lands in later phases (Hero=2, About=3, Work/Patent=4,
- * Projects=5, Contact/Footer/EasterEgg=6). Kept minimal on purpose.
+ * Skeleton sections — anchor targets for the nav. About and Footer now have
+ * dedicated components; Work / Projects / Contact remain minimal placeholders
+ * pending their later phases. Kept minimal on purpose.
  */
 
 function SectionLabel({ children }) {
@@ -30,20 +29,6 @@ function Skeleton({ id, index, title, children }) {
       />
       {children}
     </section>
-  );
-}
-
-export function About() {
-  return (
-    <Skeleton id="about" index="01 / about" title="About">
-      {/* Test scroll-reveal fires here in Phase 1. */}
-      <Reveal className="mt-6">
-        <p className="max-w-xl font-body text-base text-bone-dim">
-          Scroll-reveal test element. If this fades and springs up on scroll, the
-          Derek-Cole reveal is wired correctly.
-        </p>
-      </Reveal>
-    </Skeleton>
   );
 }
 
