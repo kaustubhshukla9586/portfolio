@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 /*
- * WordReveal — Majd-style smooth reveal for SHORT display text ONLY
+ * WordReveal - Majd-style smooth reveal for SHORT display text ONLY
  * (hero title + section headings). NEVER use on body paragraphs/bio.
  *
  * Per word: opacity 0.001→1, filter blur(10px)→0, y:10→0, staggered per word.
