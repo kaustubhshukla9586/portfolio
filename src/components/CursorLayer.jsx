@@ -13,10 +13,13 @@ export default function CursorLayer() {
   return (
     <BlobCursor
       trailCount={3}
-      sizes={[60, 125, 75]}
-      innerSizes={[20, 35, 25]}
+      // Sizes reduced 15% from the original [60,125,75] / [20,35,25] per the
+      // Phase 2 fix — the blob read too large. mix-blend-mode keeps text legible.
+      sizes={[51, 106, 64]}
+      innerSizes={[17, 30, 21]}
       fillColor="#ffb77d"
-      innerColor="rgba(255,255,255,0.8)"
+      innerColor="rgba(255,255,255,0.85)"
+      blendMode="difference"
       zIndex={100}
     />
   );
