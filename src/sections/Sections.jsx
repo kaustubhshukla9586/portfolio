@@ -1,9 +1,9 @@
 import WordReveal from "../components/WordReveal.jsx";
+import Reveal from "../components/Reveal.jsx";
 
 /*
- * Skeleton sections — anchor targets for the nav. About and Footer now have
- * dedicated components; Work / Projects / Contact remain minimal placeholders
- * pending their later phases. Kept minimal on purpose.
+ * Skeleton sections - anchor targets for the nav. Locked copy placed per brief.
+ * Patent section does not exist yet - flag to client when that phase begins.
  */
 
 function SectionLabel({ children }) {
@@ -14,7 +14,7 @@ function SectionLabel({ children }) {
   );
 }
 
-function Skeleton({ id, index, title, children }) {
+function Skeleton({ id, index, title, intro, children }) {
   return (
     <section
       id={id}
@@ -27,19 +27,47 @@ function Skeleton({ id, index, title, children }) {
         trigger="inView"
         className="mt-3 font-display text-5xl font-bold uppercase leading-none tracking-tight text-bone md:text-7xl"
       />
+      {intro && (
+        <Reveal delay={0.1}>
+          <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-bone/70 md:text-lg">
+            {intro}
+          </p>
+        </Reveal>
+      )}
       {children}
     </section>
   );
 }
 
 export function Work() {
-  return <Skeleton id="work" index="02 / work" title="Work" />;
+  return (
+    <Skeleton
+      id="work"
+      index="02 / work"
+      title="Work"
+      intro="Every job taught me to stop cutting corners."
+    />
+  );
 }
 
 export function Projects() {
-  return <Skeleton id="projects" index="03 / projects" title="Projects" />;
+  return (
+    <Skeleton
+      id="projects"
+      index="03 / projects"
+      title="Projects"
+      intro="Ideas that survived contact with reality."
+    />
+  );
 }
 
 export function Contact() {
-  return <Skeleton id="contact" index="04 / contact" title="Contact" />;
+  return (
+    <Skeleton
+      id="contact"
+      index="04 / contact"
+      title="Contact"
+      intro="No pitch. Just say what you need."
+    />
+  );
 }
