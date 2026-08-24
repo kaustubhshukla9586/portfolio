@@ -7,7 +7,7 @@
   --color-ink-800: #121110; /* raised surface */
   --color-bone: #f2dfd3; /* warm off-white body text */
   --color-bone-dim: #a89a90; /* muted meta text (still AA on ink) */
-  --color-amber: #ffb77d; /* primary accent — display type ONLY */
+  --color-amber: #ffb77d; /* primary accent - display type ONLY */
   --color-amber-deep: #d97706; /* deep accent */
 
   --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
@@ -18,14 +18,17 @@
 /* ── Base ───────────────────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
-  /* The cropped/bleeding hero type must never create a horizontal scrollbar. */
-  overflow-x: hidden;
+  /* Use `clip`, NOT `hidden`. `overflow-x: hidden` forces `overflow-y: auto`,
+     turning <html> into a scroll container, which breaks `position: sticky`
+     (the scroll-statement pin). `clip` hides the bleeding hero type without
+     establishing a scroll container, so sticky pinning works. */
+  overflow-x: clip;
   background-color: var(--color-ink);
 }
 
 body {
   margin: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
   background-color: var(--color-ink);
   color: var(--color-bone);
   font-family: var(--font-body);
@@ -33,7 +36,6 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Native cursor stays; BlobCursor is an additive overlay (desktop only). */
 
 /* ── Grain overlay ──────────────────────────────────────────────────
    Fixed, pointer-events-none pseudo layer so it never repaints on scroll. */
@@ -47,8 +49,36 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* ── Custom cursor (organic blob) ───────────────────────────────────
+   Soft amber gooey blob. The organic shape is an irregular border-radius
+   that slowly morphs; a light blur softens the edge so it reads as goo,
+   not a disc. Low opacity keeps text underneath fully legible. Desktop
+   only (component-gated); the morph is disabled under reduced-motion via
+   the global block below. */
+.cursor-blob {
+  background-color: rgba(255, 183, 125, 0.55); /* #ffb77d, low alpha */
+  border-radius: 42% 58% 45% 55% / 55% 45% 58% 42%;
+  filter: blur(2px);
+  animation: cursor-morph 6s ease-in-out infinite;
+}
+.cursor-blob[data-hover="true"] {
+  background-color: rgba(255, 183, 125, 0.4); /* even softer when enlarged */
+}
+@keyframes cursor-morph {
+  0%,
+  100% {
+    border-radius: 42% 58% 45% 55% / 55% 45% 58% 42%;
+  }
+  33% {
+    border-radius: 60% 40% 55% 45% / 42% 58% 42% 58%;
+  }
+  66% {
+    border-radius: 48% 52% 38% 62% / 60% 40% 55% 45%;
+  }
+}
+
 /* ── Hazard-stripe seam ─────────────────────────────────────────────
-   Signature motif. Used SPARINGLY — 2–3 section transitions max. */
+   Signature motif. Used SPARINGLY - 2-3 section transitions max. */
 .hazard-seam {
   height: 10px;
   width: 100%;
