@@ -1,12 +1,9 @@
 import Reveal from "../components/Reveal.jsx";
 
 /*
- * FOOTER — Majd-style. The oversized name sinks into the page floor: only the
- * top ~75% of the letters shows, the bottom quarter clipped by the page end.
- * The clip works by making the overflow-hidden wrapper shorter (0.62em) than
- * the text's own line box — so the glyph bottoms are cut off cleanly at any
- * width. Above it: quick links, contact email, and a spaced socials row with
- * arrow-links (Derek-Cole style).
+ * FOOTER - Majd-style. Oversized name sinks into the page floor.
+ * Clip height 0.72em shows ~85% of the letterforms (8.5/10 scale).
+ * Closing line placed above socials per locked copy.
  */
 
 const QUICK_LINKS = [
@@ -29,7 +26,6 @@ const EMAIL = "kaustubhshukla9586@gmail.com";
 export default function Footer() {
   return (
     <footer className="relative overflow-hidden bg-ink pt-24 md:pt-32">
-      {/* Footer content */}
       <div className="mx-auto max-w-[1400px] px-5 md:px-10">
         <Reveal>
           <div className="grid gap-12 md:grid-cols-3">
@@ -91,18 +87,23 @@ export default function Footer() {
           </div>
         </Reveal>
 
-        <p className="mt-16 font-mono text-[11px] uppercase tracking-[0.2em] text-bone-dim">
-          © {new Date().getFullYear()} Kaustubh Shukla
+        {/* Closing line - locked copy, above socials row / copyright. */}
+        <p className="mt-16 font-body text-base italic text-bone/60">
+          Still questioning everything. Including this site.
+        </p>
+
+        <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.2em] text-bone-dim">
+          {new Date().getFullYear()} Kaustubh Shukla
         </p>
       </div>
 
-      {/* Oversized name sinking into the floor — bottom ~25% clipped. */}
+      {/* Oversized name clipped to ~85% visible (0.72em of the line box). */}
       <div
         className="mt-10 overflow-hidden text-center leading-[0.8] md:mt-16"
-        style={{ height: "0.62em", fontSize: "min(26vw, 20rem)" }}
+        style={{ height: "0.72em", fontSize: "min(26vw, 20rem)" }}
         aria-hidden="true"
       >
-        <span className="block whitespace-nowrap font-display font-bold uppercase tracking-tight text-bone">
+        <span className="block whitespace-nowrap font-display font-bold uppercase tracking-tight text-bone/[0.06]">
           KAUSTUBH
         </span>
       </div>
