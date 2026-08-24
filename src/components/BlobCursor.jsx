@@ -37,6 +37,10 @@ export default function BlobCursor({
   fastEase = "power3.out",
   slowEase = "power1.out",
   zIndex = 100,
+  // Anti-slop readability rule: the blob composites with `mix-blend-mode` so
+  // it NEVER hides text beneath it. `difference` inverts wherever it overlaps
+  // bone-coloured type, keeping nav labels / body copy / links legible.
+  blendMode = "difference",
 }) {
   const containerRef = useRef(null);
   const blobsRef = useRef([]);
@@ -99,7 +103,10 @@ export default function BlobCursor({
 
       <div
         className="blob-main"
-        style={{ filter: useFilter ? `url(#${filterId})` : undefined }}
+        style={{
+          filter: useFilter ? `url(#${filterId})` : undefined,
+          mixBlendMode: blendMode,
+        }}
       >
         {Array.from({ length: trailCount }).map((_, i) => (
           <div
