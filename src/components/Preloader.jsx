@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 /*
- * Preloader — SWAPPABLE.
+ * Preloader - SWAPPABLE.
  * Covers the real ~2.6s asset-loading buffer (fonts + portraits) driven from
  * App.jsx. A determinate 0→100 counter + fill bar reads as genuine loading
  * rather than a decorative spinner. Swap `<PreloaderVisual/>` internals if a
