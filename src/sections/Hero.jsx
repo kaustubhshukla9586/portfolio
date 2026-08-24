@@ -31,7 +31,7 @@ export default function Hero() {
       ref={ref}
       className="relative flex min-h-[100dvh] flex-col justify-center overflow-hidden"
     >
-      <div className="mx-auto w-full max-w-[1400px] px-5 md:px-10">
+      <div className="w-full px-2 sm:px-3">
         {/* Status line */}
         <motion.p
           initial={reduce ? false : { opacity: 0, y: 12 }}
@@ -43,30 +43,31 @@ export default function Hero() {
         </motion.p>
       </div>
 
-      {/* Cropped name block — bleeds past the edges, clipped by overflow-hidden. */}
-      <motion.div style={{ y: nameY }} className="w-full px-5 md:px-10">
-        <div className="mx-auto max-w-[1400px]">
-          <WordReveal
-            as="h1"
-            text="KAUSTUBH"
-            baseDelay={1.6}
-            className="block font-display font-bold uppercase leading-[0.82] tracking-tight text-bone"
-            wordClassName="text-[22vw] md:text-[19vw] lg:text-[17vw]"
-          />
-          <WordReveal
-            as="h1"
-            text="SHUKLA"
-            baseDelay={1.75}
-            className="-mt-[0.06em] block whitespace-nowrap font-display font-bold uppercase leading-[0.82] tracking-tight text-amber"
-            wordClassName="text-[30vw] md:text-[26vw] lg:text-[24vw]"
-          />
-        </div>
+      {/* MASSIVE cropped name block — Derek-Cole scale. The type IS the hero:
+          it fills the full viewport width and letters intentionally clip at the
+          frame edges (guarded by overflow-hidden on the section + body). No
+          max-width and near-zero side padding so it bleeds true edge-to-edge. */}
+      <motion.div style={{ y: nameY }} className="w-full px-1 sm:px-2">
+        <WordReveal
+          as="h1"
+          text="KAUSTUBH"
+          baseDelay={1.6}
+          className="block font-display font-bold uppercase leading-[0.8] tracking-[-0.02em] text-bone"
+          wordClassName="text-[29vw] leading-[0.8]"
+        />
+        <WordReveal
+          as="h1"
+          text="SHUKLA"
+          baseDelay={1.75}
+          className="-mt-[0.05em] block whitespace-nowrap font-display font-bold uppercase leading-[0.8] tracking-[-0.02em] text-amber"
+          wordClassName="text-[40vw] leading-[0.8]"
+        />
       </motion.div>
 
       {/* Tagline — longer text, plain fade-up (never blur reveal). */}
       <motion.div
         style={{ y: tagY, opacity: fade }}
-        className="mx-auto mt-8 w-full max-w-[1400px] px-5 md:mt-10 md:px-10"
+        className="mt-8 w-full px-2 sm:px-3 md:mt-10"
       >
         <motion.p
           initial={reduce ? false : { opacity: 0, y: 16 }}
