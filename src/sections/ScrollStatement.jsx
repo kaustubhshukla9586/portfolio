@@ -2,11 +2,11 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 
 /*
- * SCROLL STATEMENT — a full-viewport interlude between About and Work.
- * The statement is pinned centre-screen while the section scrolls past; each
- * word fills from muted gray to full bone as scroll progresses (Majd-style
- * scrub reveal). Deliberately breaks the rhythm. Our real tagline, shortened.
- * Under reduced motion it renders fully lit and static.
+ * SCROLL STATEMENT - the one and only instance of the original tagline.
+ * The section is h-[300vh] with a sticky inner div, which means the page is
+ * "pinned" for 200vh of scroll distance. Word ranges span 0→1 so the last
+ * word finishes lighting exactly as the sticky pin releases and normal scroll
+ * resumes into the next section. No dead scroll, no early release.
  */
 
 const STATEMENT =
@@ -26,21 +26,25 @@ export default function ScrollStatement() {
   const reduce = useReducedMotion();
   const words = STATEMENT.split(" ");
 
+  // The wrapper is h-[250vh]: 150vh of scroll distance while the inner block is
+  // pinned (sticky top-0 h-screen). scrollYProgress runs 0→1 across the wrapper.
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
   });
 
+  // All words finish lighting by progress FILL_DONE (< 1), so the last ~20% of
+  // the pin is a deliberate hold on the fully-lit statement before it releases.
+  const FILL_DONE = 0.8;
+
   return (
-    // Under reduced motion there's no scrub, so we collapse the tall scroll
-    // track to a normal centred block instead of ~2 viewports of dead space.
     <section
       ref={ref}
-      className={`relative ${reduce ? "min-h-[60vh]" : "h-[220vh]"}`}
+      className={`relative ${reduce ? "min-h-[60vh]" : "h-[250vh]"}`}
       aria-label="Statement"
     >
       <div
-        className={`flex items-center justify-center overflow-hidden px-5 md:px-10 ${
+        className={`flex items-center justify-center px-5 md:px-10 ${
           reduce ? "min-h-[60vh]" : "sticky top-0 h-screen"
         }`}
       >
@@ -48,15 +52,19 @@ export default function ScrollStatement() {
           {reduce
             ? STATEMENT
             : words.map((word, i) => {
-                // Each word owns a slice of the scroll; slices overlap slightly
-                // so the fill reads as a continuous sweep, not discrete steps.
-                const start = (i / words.length) * 0.85;
-                const end = start + 1.2 / words.length;
+                // Each word owns an equal slice of the 0→FILL_DONE range.
+                // Slices overlap (factor 1.5) so the fill reads as a continuous
+                // sweep. The final word completes at FILL_DONE, leaving a hold.
+                const start = (i / words.length) * FILL_DONE;
+                const end = Math.min(
+                  start + (1.5 / words.length) * FILL_DONE,
+                  FILL_DONE
+                );
                 return (
                   <Word
                     key={`${word}-${i}`}
                     word={word}
-                    range={[start, Math.min(end, 1)]}
+                    range={[start, end]}
                     progress={scrollYProgress}
                   />
                 );
