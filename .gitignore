@@ -7,3 +7,9 @@ dist/
 .env
 .env.*
 !.env.example
+node_modules
+.env
+.env.local
+dist
+.vercel
+Picflow Images Aug 24.zip
