@@ -46,35 +46,35 @@ export const projects = [
     name: "Katana Vault",
     links: {},
     description: "Built and shipped a zero-knowledge encrypted password manager solo, end to end. Includes a Chrome extension (MV3), backend, database, and a full website.",
-    image: "/assets/projects/watermark-removed-katanavault mockup.png"
+    image: "/assets/projects/katana-vault-mockup.webp"
   },
   {
     id: "pathified",
     name: "Pathified",
     links: { website: "https://pathified.vercel.app", github: "https://github.com/kaustubhshukla9586/Pathified" },
     description: "AI-powered CS career guidance app featuring a 25-question adaptive quiz with real-time personalized career recommendations. Built with React, Groq API and Supabase; deployed on Vercel.",
-    image: "/assets/projects/watermark-removed-pathified mockup.png"
+    image: "/assets/projects/pathified-mockup.webp"
   },
   {
     id: "lpu-wifi",
     name: "LPU WiFi Extension",
     links: { github: "https://github.com/kaustubhshukla9586/lpu-wifi-extension" },
     description: "Browser extension streamlining LPU campus network login and connectivity, removing manual steps for daily network authentication. Built with HTML5, CSS3 and JavaScript.",
-    image: "/assets/projects/watermark-removed-lpu-wifi mockup.png"
+    image: "/assets/projects/lpu-wifi-mockup.webp"
   },
   {
     id: "ironforge",
     name: "IronForge Fitness",
     links: { website: "https://forgeiron.vercel.app", github: "https://github.com/kaustubhshukla9586/IronForge" },
     description: "Responsive gym landing page with smooth scroll animations and mobile-first design. Built with React 18, Vite, Tailwind CSS and Framer Motion; deployed on Vercel.",
-    image: "/assets/projects/watermark-removed-ironforge mockup.png"
+    image: "/assets/projects/ironforge-mockup.webp"
   },
   {
     id: "studylpu",
     name: "Study LPU",
     links: { website: "https://studylpu.online" },
     description: "A comprehensive study and resource platform built for LPU students.",
-    image: "/assets/projects/watermark-removed-studylpu mockup.png"
+    image: "/assets/projects/studylpu-mockup.webp"
   }
 ];
 
