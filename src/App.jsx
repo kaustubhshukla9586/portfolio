@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { MotionConfig } from "framer-motion";
+import Lenis from "@studio-freight/lenis";
 import Preloader from "./components/Preloader.jsx";
 import Cursor from "./components/Cursor.jsx";
 import Nav from "./components/Nav.jsx";
@@ -7,7 +8,8 @@ import Hero from "./sections/Hero.jsx";
 import About from "./sections/About.jsx";
 import ScrollStatement from "./sections/ScrollStatement.jsx";
 import Footer from "./sections/Footer.jsx";
-import { Contact, Patent } from "./sections/Sections.jsx";
+import Contact from "./sections/Contact.jsx";
+import Research from "./sections/Research.jsx";
 import Work from "./sections/Work.jsx";
 import Projects from "./sections/Projects.jsx";
 
@@ -27,6 +29,26 @@ function preloadImage(src) {
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: false,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    return () => lenis.destroy();
+  }, []);
 
   // The preloader is a REAL asset-loading buffer, not just cosmetic. We hold it
   // until (a) fonts are ready, (b) the portraits are decoded, AND (c) a minimum
@@ -71,7 +93,7 @@ export default function App() {
         <ScrollStatement />
         <Work />
         <Projects />
-        <Patent />
+        <Research />
         <Contact />
       </main>
       <Footer />
