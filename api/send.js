@@ -69,8 +69,8 @@ export default async function handler(req, res) {
     const data = await resend.emails.send({
       from: 'Portfolio Contact <onboarding@resend.dev>',
       to: ['kaustubh.work77@gmail.com'],
-      subject: \`[PORTFOLIO] New message from \${name}\`,
-      text: \`Name: \${name}\\nEmail: \${email}\\nMessage: \${message}\`,
+      subject: `[PORTFOLIO] New message from ${name}`,
+      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
       html: htmlTemplate,
     });
 

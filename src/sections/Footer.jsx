@@ -21,7 +21,7 @@ const SOCIALS = [
   { label: "YOUTUBE", href: "https://www.youtube.com/@bennythebonker" },
 ];
 
-const EMAIL = "kaustubhshukla9586@gmail.com";
+const EMAIL = "kaustubh.work77@gmail.com";
 
 export default function Footer() {
   return (
