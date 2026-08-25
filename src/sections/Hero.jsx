@@ -121,7 +121,9 @@ export default function Hero() {
         KAUSTUBH
       </span>
 
-      {/* Status line — left edge, top offset tuned to share a visual axis with the nav pill */}
+      {/* Status line — left edge. On phone/tablet the centered nav pill spans too
+          much width to share its axis, so the status line drops just below the pill.
+          From lg up (confirmed clear) it rises back onto the nav's visual axis. */}
       <motion.p
         initial={reduce ? false : { opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
@@ -130,7 +132,7 @@ export default function Hero() {
             ? { duration: 0 }
             : { duration: 0.8, delay: 1.4, ease: [0.16, 1, 0.3, 1] }
         }
-        className="absolute left-2 top-[27px] font-mono text-[11px] uppercase leading-none tracking-[0.35em] text-amber sm:left-3 md:top-[38px] md:text-xs"
+        className="absolute left-2 top-[62px] font-mono text-[11px] uppercase leading-none tracking-[0.35em] text-amber sm:left-3 md:top-[80px] md:text-xs lg:top-[38px]"
       >
         open to opportunities
       </motion.p>
