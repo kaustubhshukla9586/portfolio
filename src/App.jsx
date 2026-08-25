@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { MotionConfig } from "framer-motion";
-import Lenis from "@studio-freight/lenis";
 import Preloader from "./components/Preloader.jsx";
 import Cursor from "./components/Cursor.jsx";
 import Nav from "./components/Nav.jsx";
@@ -30,25 +29,6 @@ function preloadImage(src) {
 export default function App() {
   const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-    });
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    return () => lenis.destroy();
-  }, []);
 
   // The preloader is a REAL asset-loading buffer, not just cosmetic. We hold it
   // until (a) fonts are ready, (b) the portraits are decoded, AND (c) a minimum
