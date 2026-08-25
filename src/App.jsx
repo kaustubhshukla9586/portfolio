@@ -7,13 +7,12 @@ import Hero from "./sections/Hero.jsx";
 import About from "./sections/About.jsx";
 import ScrollStatement from "./sections/ScrollStatement.jsx";
 import Footer from "./sections/Footer.jsx";
-import { Work, Projects, Contact } from "./sections/Sections.jsx";
+import { Contact, Patent } from "./sections/Sections.jsx";
+import Work from "./sections/Work.jsx";
+import Projects from "./sections/Projects.jsx";
 
-// Heavy above-the-fold-ish assets we decode DURING the preloader so the
-// grayscale→color portrait swap (About) never janks after the loader lifts.
 const PRELOAD_IMAGES = [
   "/assets/portrait-bw.jpg",
-  "/assets/portrait-color.jpg",
 ];
 
 function preloadImage(src) {
@@ -72,6 +71,7 @@ export default function App() {
         <ScrollStatement />
         <Work />
         <Projects />
+        <Patent />
         <Contact />
       </main>
       <Footer />
