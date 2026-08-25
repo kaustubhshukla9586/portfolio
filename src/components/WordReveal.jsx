@@ -1,3 +1,4 @@
+import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 /*
@@ -8,7 +9,7 @@ import { motion, useReducedMotion } from "framer-motion";
  * Spring: bounce 0, duration ~1.6s (critically damped, no overshoot).
  * Under reduced motion it renders instantly with no blur/stagger.
  */
-export default function WordReveal({
+function WordReveal({
   text,
   as: Tag = "span",
   className = "",
@@ -59,3 +60,5 @@ export default function WordReveal({
     </MotionTag>
   );
 }
+
+export default React.memo(WordReveal);
