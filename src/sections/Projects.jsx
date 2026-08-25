@@ -115,31 +115,58 @@ const ProjectContent = ({ project }) => {
   // Layouts are keyed by project.id (identity), NOT list position — so the
   // display order can change in content.js without shuffling these layouts.
 
-  // Katana Vault — mockup bleeds bottom-right, text in bottom-left safe area
+  // Katana Vault — mockup bleeds bottom-right, text in bottom-left safe area.
+  // Mobile stacks cleanly (text above image) to avoid the overlap that the
+  // full-bleed absolute layout causes at ≤767px.
   if (project.id === "katana-vault") {
     return (
-      <div className="w-full h-full relative overflow-hidden">
-         <img src={project.image} alt={project.name} style={{ transform: mockupTransform(project.id) }} className="absolute -bottom-[20vh] -right-[15vw] md:-bottom-[45vh] md:-right-[10vw] w-[140vw] md:w-[75vw] max-w-[1400px] object-contain opacity-90" />
-         <div className="absolute bottom-6 left-6 md:bottom-12 md:left-12 w-full max-w-[700px] z-10 flex flex-col justify-end">
-            <Title className="text-7xl md:text-[9rem] tracking-tighter" />
-            <Desc className="text-lg md:text-2xl mt-6 font-light max-w-lg text-bone/90" />
+      <>
+        {/* Mobile: clean vertical stack, no overlap */}
+        <div className="md:hidden w-full h-full flex flex-col justify-center gap-8 px-6">
+          <div>
+            <Title className="text-6xl tracking-tighter" />
+            <Desc className="text-base mt-4 font-light text-bone/90" />
             <Links />
-         </div>
-      </div>
+          </div>
+          <img src={project.image} alt={project.name} className="w-full max-w-[380px] object-contain" />
+        </div>
+        {/* Desktop: unchanged full-bleed layout */}
+        <div className="hidden md:block w-full h-full relative overflow-hidden">
+           <img src={project.image} alt={project.name} style={{ transform: mockupTransform(project.id) }} className="absolute -bottom-[20vh] -right-[15vw] md:-bottom-[45vh] md:-right-[10vw] w-[140vw] md:w-[75vw] max-w-[1400px] object-contain opacity-90" />
+           <div className="absolute bottom-6 left-6 md:bottom-12 md:left-12 w-full max-w-[700px] z-10 flex flex-col justify-end">
+              <Title className="text-7xl md:text-[9rem] tracking-tighter" />
+              <Desc className="text-lg md:text-2xl mt-6 font-light max-w-lg text-bone/90" />
+              <Links />
+           </div>
+        </div>
+      </>
     );
   }
 
-  // Pathified — laptop left, text right (mockup keeps its vertical centering)
+  // Pathified — laptop left, text right (mockup keeps its vertical centering).
+  // Mobile stacks cleanly (text above image) to avoid overlap at ≤767px.
   if (project.id === "pathified") {
     return (
-      <div className="w-full h-full relative flex items-center overflow-hidden">
-         <img src={project.image} alt={project.name} style={{ transform: mockupTransform(project.id, "translateY(-50%)") }} className="absolute top-1/2 left-[-10vw] md:left-[5vw] w-[95vw] md:w-[45vw] max-w-[900px] object-contain drop-shadow-[0_0_100px_rgba(0,0,0,0.5)]" />
-         <div className="absolute top-[20vh] right-6 md:top-[25vh] md:right-[15vw] z-10 max-w-[500px]">
-            <Title className="text-6xl md:text-[7rem] md:text-right" />
-            <Desc className="text-base md:text-xl mt-6 text-bone/90 md:text-right md:ml-auto" />
-            <div className="flex md:justify-end"><Links /></div>
-         </div>
-      </div>
+      <>
+        {/* Mobile: clean vertical stack, no overlap */}
+        <div className="md:hidden w-full h-full flex flex-col justify-center gap-8 px-6">
+          <div>
+            <Title className="text-6xl" />
+            <Desc className="text-base mt-4 text-bone/90" />
+            <Links />
+          </div>
+          <img src={project.image} alt={project.name} className="w-full max-w-[420px] object-contain drop-shadow-[0_0_100px_rgba(0,0,0,0.5)]" />
+        </div>
+        {/* Desktop: unchanged laptop-left / text-right layout */}
+        <div className="hidden md:flex w-full h-full relative items-center overflow-hidden">
+           <img src={project.image} alt={project.name} style={{ transform: mockupTransform(project.id, "translateY(-50%)") }} className="absolute top-1/2 left-[-10vw] md:left-[5vw] w-[95vw] md:w-[45vw] max-w-[900px] object-contain drop-shadow-[0_0_100px_rgba(0,0,0,0.5)]" />
+           <div className="absolute top-[20vh] right-6 md:top-[25vh] md:right-[15vw] z-10 max-w-[500px]">
+              <Title className="text-6xl md:text-[7rem] md:text-right" />
+              <Desc className="text-base md:text-xl mt-6 text-bone/90 md:text-right md:ml-auto" />
+              <div className="flex md:justify-end"><Links /></div>
+           </div>
+        </div>
+      </>
     );
   }
 
