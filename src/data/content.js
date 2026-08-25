@@ -81,10 +81,10 @@ export const projects = [
 export const research = [
   {
     type: "Patent",
-    role: "Co-inventor",
+    role: "Inventor",
     title: "DBMS Predictive Execution",
     collaborators: [],
     area: "Database Systems",
-    description: "Co-inventor/applicant on a database predictive-execution patent initiative. Research area: database systems, predictive execution and applied computing."
+    description: "A database engine that predicts and pre-executes likely queries by recognizing structural patterns between them, cutting redundant computation without sacrificing accuracy."
   }
 ];
