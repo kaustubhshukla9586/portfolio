@@ -17,7 +17,7 @@ export default function Nav() {
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ type: "spring", bounce: 0, duration: 1.6, delay: 1.4 }}
+      transition={{ ease: [0.16, 1, 0.3, 1], duration: 1.6, delay: 1.4 }}
       className="fixed inset-x-0 top-4 z-[80] flex justify-center px-4 md:top-6"
       aria-label="Primary"
     >

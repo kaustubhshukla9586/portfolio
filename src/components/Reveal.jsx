@@ -17,7 +17,7 @@ export default function Reveal({ children, delay = 0, className }) {
       transition={
         reduce
           ? { duration: 0 }
-          : { type: "spring", stiffness: 130, damping: 30, mass: 0.1, delay }
+          : { ease: [0.16, 1, 0.3, 1], duration: 1.2, delay }
       }
     >
       {children}

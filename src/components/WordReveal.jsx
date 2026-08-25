@@ -46,8 +46,7 @@ function WordReveal({
             initial={{ opacity: 0.001, filter: "blur(10px)", y: 10 }}
             {...anim}
             transition={{
-              type: "spring",
-              bounce: 0,
+              ease: [0.16, 1, 0.3, 1],
               duration: 1.6,
               delay: baseDelay + i * stagger,
             }}
