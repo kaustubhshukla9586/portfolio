@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { MotionConfig } from "framer-motion";
+import { Analytics } from "@vercel/analytics/react";
 import Preloader from "./components/Preloader.jsx";
 import Cursor from "./components/Cursor.jsx";
 import Nav from "./components/Nav.jsx";
@@ -77,6 +78,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <Analytics />
     </MotionConfig>
   );
 }
