@@ -103,7 +103,7 @@ export default function Footer() {
         style={{ height: "0.72em", fontSize: "min(26vw, 20rem)" }}
         aria-hidden="true"
       >
-        <span className="block whitespace-nowrap font-display font-bold uppercase tracking-tight text-bone/[0.06]">
+        <span className="block whitespace-nowrap font-display font-bold uppercase tracking-tight text-bone/[0.15]">
           KAUSTUBH
         </span>
       </div>
